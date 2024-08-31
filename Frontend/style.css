@@ -1,0 +1,13 @@
+* {
+margin: 0;
+padding: 0;
+box-sizing: border-box;
+}
+
+.form-login{
+    width: 400px;
+    height: 340px;
+    background: #4e4e4e;
+    margin: auto;
+    margin-top: 150px;
+}
