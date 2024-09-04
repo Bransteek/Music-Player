@@ -1,54 +1,50 @@
-from flask import Flask, request, render_template
+"""from flask import Flask, request, render_template
 import psycopg2
 
 app = Flask(__name__)
 
-# Datos de conexión
-host = "localhost"
-dbname = "50_de_cilantro"
-user = "postgres"
-password = "1040871723"
-port = "5432"
+# Configuración de la base de datos
+DB_HOST = "localhost"
+DB_NAME = "50_de_cilantro"
+DB_USER = "postgres"
+DB_PASSWORD = "Brian_2005"
 
-# Conectar a la base de datos
-def get_db_connection():
-    conn = psycopg2.connect(
-        host=host,
-        dbname=dbname,
-        user=user,
-        password=password,
-        port=port
-    )
-    return conn
-
+# Página de inicio (formulario)
 @app.route('/')
-def index():
-    # Renderizar el archivo HTML desde la carpeta 'templates'
-    return render_template('index.html')
+def home():
+    return render_template('Login.html')
 
+# Ruta para manejar el formulario
 @app.route('/submit', methods=['POST'])
 def submit():
-    username = request.form['username']
-    password = request.form['password']
+    username = request.form.get('username')
+    password = request.form.get('password')
 
-    conn = get_db_connection()
-    cursor = conn.cursor()
+    # Conectar a la base de datos y verificar credenciales
+    try:
+        conn = psycopg2.connect(
+            host=DB_HOST,
+            dbname=DB_NAME,
+            user=DB_USER,
+            password=DB_PASSWORD
+        )
+        cursor = conn.cursor()
 
-    # Consultar la base de datos para verificar las credenciales
-    cursor.execute('''
-        SELECT * FROM "User"
-        WHERE "User_name" = %s AND "Password" = %s
-    ''', (username, password))
+        # Consulta para verificar las credenciales
+        query = 'SELECT COUNT(*) FROM "User" WHERE "User_Name" = %s AND "Password" = %s'
+        cursor.execute(query, (username, password))
+        count = cursor.fetchone()[0]
 
-    user = cursor.fetchone()
-    cursor.close()
-    conn.close()
+        cursor.close()
+        conn.close()
 
-    if user:
-        return 'Ingreso exitoso!'
-    else:
-        return 'Usuario o contraseña incorrectos.'
+        if count > 0:
+            return render_template('result.html', message="Inicio de sesión exitoso")
+        else:
+            return render_template('result.html', message="Credenciales incorrectas")
+
+    except Exception as e:
+        return f"Error al conectar a la base de datos: {e}"
 
 if __name__ == '__main__':
-    app.run(debug=True)
-
+    app.run(debug=True)"""
