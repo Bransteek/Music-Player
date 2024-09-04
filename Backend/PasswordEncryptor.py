@@ -98,16 +98,16 @@ map = {
 }
 
 
-def enctryp(password):
-    encryp_password = ""
+def encrypt(password):
+    encrypt_password = ""
 
     for chr in password:
-        encryp_password += map.get(chr)
+        encrypt_password += map.get(chr)
 
-    return encryp_password
+    return encrypt_password
 
 
-def unencrypt(encrypt_password):
+def decrypt(encrypt_password):
     un_password = ""
     for chr in encrypt_password:
         un_password += next((k for k, v in map.items() if v == chr), None)
