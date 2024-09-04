@@ -24,11 +24,21 @@ $stmt = $pdo->prepare($query);
 $stmt->execute(['username' => $username, 'password' => $password]);
 $count = $stmt->fetchColumn();
 
-// Verificar las credenciales
+// Verificar las credenciales y mostrar mensaje directamente
 if ($count > 0) {
     echo "Inicio de sesión exitoso";
 } else {
     echo "Credenciales incorrectas";
 }
+?>
+
+<?php
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
+// Existing PHP code...
+?>
+<?php
+phpinfo();
 ?>
 
