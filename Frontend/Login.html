@@ -1,37 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="Login.css" />
     <link rel="icon" href="../Image/Logo.ico" type="image/x-icon" />
     <title>Aizi</title>
-</head>
-<body>
-    <section class="form-login">
+  </head>
+  <body>
+    <form action="../Backend/Auth.php" method="post">
+      <section class="form-login">
         <h5>Iniciar Sesión</h5>
-        <form method="post" action="../Backend/Connection_BD.py">
-
-            <input
-                class="controls"
-                type="text"
-                name="username"
-                placeholder="Usuario"
-                required
-            />
-            <input
-                class="controls"
-                type="password"
-                name="password"
-                placeholder="Contraseña"
-                required
-            />
-            <button class="buttons" type="submit">Submit</button>
-        </form>
-        
+        <input
+          class="controls"
+          type="text"
+          name="username"
+          placeholder="Usuario"
+          required
+        />
+        <input
+          class="controls"
+          type="password"
+          name="password"
+          placeholder="Contraseña"
+          required
+        />
+        <button class="buttons" type="submit">Submit</button>
         <p><a href="#">¿Has olvidado tu contraseña?</a></p>
-    </section>
-</body>
+      </section>
+    </form>
+  </body>
 </html>
-
-

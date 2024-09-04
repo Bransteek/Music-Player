@@ -49,6 +49,7 @@ body {
   border: none;
   color: white;
   margin-bottom: 16px;
+  cursor: pointer;
 }
 
 .form-login p {
