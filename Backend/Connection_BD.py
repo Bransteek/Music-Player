@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template_string
+from flask import Flask, request, render_template
 import psycopg2
 
 app = Flask(__name__)
@@ -23,43 +23,8 @@ def get_db_connection():
 
 @app.route('/')
 def index():
-    # HTML del formulario
-    html_form = '''
-    <!DOCTYPE html>
-    <html lang="en">
-      <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link rel="stylesheet" href="style.css" />
-        <link rel="icon" href="../Image/Logo.ico" type="image/x-icon" />
-        <title>Aizi</title>
-      </head>
-      <body>
-        <section class="form-login">
-          <h5>Iniciar Sesion</h5>
-          <form method="post" action="/submit">
-            <input
-              class="controls"
-              type="text"
-              name="username"
-              placeholder="Usuario"
-              required
-            />
-            <input
-              class="controls"
-              type="password"
-              name="password"
-              placeholder="Contraseña"
-              required
-            />
-            <button class="buttons" type="submit">Submit</button>
-          </form>
-          <p><a href="#">¿Has olvidado tu contraseña?</a></p>
-        </section>
-      </body>
-    </html>
-    '''
-    return render_template_string(html_form)
+    # Renderizar el archivo HTML desde la carpeta 'templates'
+    return render_template('index.html')
 
 @app.route('/submit', methods=['POST'])
 def submit():
@@ -86,3 +51,4 @@ def submit():
 
 if __name__ == '__main__':
     app.run(debug=True)
+
