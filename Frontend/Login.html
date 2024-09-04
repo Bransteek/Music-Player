@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="Login.css" />
     <link rel="icon" href="../Image/Logo.ico" type="image/x-icon" />
+    <script src="../Backend/PasswordEncryptor.js"></script>
     <title>Aizi</title>
   </head>
   <body>
@@ -19,13 +20,22 @@
           required
         />
         <input
+          id="passwordvalue"
           class="controls"
           type="password"
           name="password"
           placeholder="Contraseña"
           required
         />
-        <button class="buttons" type="submit">Submit</button>
+        <button onclick="cambiarValor()" class="buttons" type="submit">Submit</button>
+        
+        <script>
+          function cambiarValor() {
+            var input = document.getElementById("passwordvalue");
+            input.value = encrypt(input.value);
+            document.getElementById("passwordvalue").innerText = input.value;
+          }
+        </script>
         <p><a href="#">¿Has olvidado tu contraseña?</a></p>
       </section>
     </form>
