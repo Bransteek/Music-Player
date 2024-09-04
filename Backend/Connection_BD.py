@@ -30,8 +30,10 @@ try:
     print("Versión de PostgreSQL:", record)
     #INSERT INTO "User" ("User_name", "Password", "Email")
     #VALUES ('nombre_usuario', 'contraseña', 'correo@ejemplo.com');
+    #DELETE FROM "User"
+    #WHERE "User_Name" = 'Brian';
+    cursor.execute('SELECT * FROM "User"')
 
-    cursor.execute("SELECT * FROM User")
 
    
     record = cursor.fetchone()
