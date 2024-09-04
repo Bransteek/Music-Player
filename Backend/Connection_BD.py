@@ -1,5 +1,8 @@
 import psycopg2
-
+user_name =""
+user_password=""
+user_email=""
+    
 # Datos de conexión
 host = "localhost"  # Dirección del servidor de la base de datos
 dbname = "50_de_cilantro"  # Nombre de la base de datos
@@ -23,10 +26,16 @@ try:
 
     # Ejecutar una consulta SQL
     cursor.execute("SELECT version();")
-
-    # Obtener el resultado de la consulta
     record = cursor.fetchone()
     print("Versión de PostgreSQL:", record)
+    #INSERT INTO "User" ("User_name", "Password", "Email")
+    #VALUES ('nombre_usuario', 'contraseña', 'correo@ejemplo.com');
+
+    cursor.execute("SELECT * FROM User")
+
+   
+    record = cursor.fetchone()
+    print("Usuarios:", record)
 
     # Cerrar el cursor y la conexión
     cursor.close()
