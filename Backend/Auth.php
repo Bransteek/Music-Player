@@ -1,21 +1,21 @@
 <?php
     include_once("BD.php");
-    /*
-    $User_Name = $_POST['username'];
-    $Password  = $_POST['password'];
-    */
+    
+
+    
     // Connect to the database
     $conn = conexion::conexion_bd();
 
-    $User_Name = $conn->real_escape_string($_POST['username']);
-    $Password = $conn->real_escape_string($_POST['password']);
-
     if ($conn) {
         // Prepare a query
-        $sql = "SELECT * from user_ Where user_name = '$User_Name' and password_ ='$Password'";
+        $sql = "SELECT * from user_ Where user_name = :User_Name and password_ = :pass";
 
         // Execute the query
         $stmt = $conn->prepare($sql);
+        $stmt -> bindParam(':User_Name',$User_Name);
+        $stmt -> bindParam(':pass',$pass);
+        $User_Name = $_POST['username'];
+        $pass  = $_POST['password'];
         $stmt->execute();
 
         // Fetch all results
