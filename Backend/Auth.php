@@ -1,10 +1,14 @@
 <?php
     include_once("BD.php");
+    /*
     $User_Name = $_POST['username'];
     $Password  = $_POST['password'];
-
+    */
     // Connect to the database
     $conn = conexion::conexion_bd();
+
+    $User_Name = $conn->real_escape_string($_POST['username']);
+    $Password = $conn->real_escape_string($_POST['password']);
 
     if ($conn) {
         // Prepare a query
