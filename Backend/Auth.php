@@ -8,7 +8,10 @@
 
     if ($conn) {
         // Prepare a query
-        $sql = "SELECT * from user_ Where user_name = :User_Name and password_ = :pass";
+        $sql = "SELECT user_.user_name , rol.rol_name
+        FROM user_ 
+        JOIN rol ON user_.user_rol_id = rol.rol_id
+        WHERE user_name = :User_Name AND password_ = :pass";
 
         // Execute the query
         $stmt = $conn->prepare($sql);
@@ -27,9 +30,13 @@
             echo "Usuario o Contraseña incorrectos";
         }else{
             foreach ($results as $row) {
-                echo "<br>";
-                echo "User: " . $row['user_name'] . " - Email: " . $row['email'] . " - Password: " . $row['password_'] . "<br>";
+                session_start();
+                $_SESSION['usuario'] = $row['user_name'];
+                $_SESSION['rol'] = $row['rol_name'];
             }
+
+            header("Location: prueba.php");
+            exit();
         }
 
     }
