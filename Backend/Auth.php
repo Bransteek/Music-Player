@@ -35,7 +35,7 @@
                 $_SESSION['rol'] = $row['rol_name'];
             }
 
-            header("Location: prueba.php");
+            header("Location: index.php");
             exit();
         }
 
