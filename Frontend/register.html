@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="Login.css" />
+    <link rel="icon" href="../Image/Logo.ico" type="image/x-icon" />
+    <script src="../Backend/PasswordEncryptor.js"></script>
+
+    <style>
+        .form-login {
+            width: 400px;
+            height: 450px;
+            background: #4e4e4e;
+            margin: auto;
+            margin-top: 80px;
+            box-shadow: 7px 13px 37px #000;
+            padding: 20px 30px;
+            border-top: 4px solid purple;
+            color: white;
+            border-radius: 10px;
+        }
+    </style>
+    <title>Aizi</title>
+</head>
+
+<body>
+    <form action="../Backend/Auth.php" method="post">
+        <section class="form-login">
+            <h5>Registro</h5>
+            <input class="controls" type="text" name="username" placeholder="Usuario" required  autocomplete="off"/>
+
+            <input id="passwordvalue" class="controls" type="password" name="password" placeholder="Contraseña"
+                required />
+
+            <input id="confirmpasswordvalue" class="controls" type="password" name="password" placeholder="Contraseña"
+                required />
+
+            <input id="email" class="controls" type="email" name="email" placeholder="Correo" required autocomplete="off"/>
+
+            <button onclick="cambiarValor()" class="buttons" type="submit">Submit</button>
+
+            <script>
+                function cambiarValor() {
+                    var input = document.getElementById("passwordvalue");
+                    input.value = encrypt(input.value);
+                    document.getElementById("passwordvalue").innerText = input.value;
+                }
+            </script>
+            <p><a href="Frontend\Login.html">ya tienes una cuenta</a></p>
+        </section>
+    </form>
+</body>
+
+</html>
