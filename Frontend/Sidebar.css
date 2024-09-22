@@ -1,29 +1,46 @@
- /* Estilo del sidebar */
- .sidebar {
-    height: 100%;
-    width: 250px;
-    position: fixed;
-    right: 0;
-    top: 0;
-    background-color: #111;
-    padding-top: 20px;
+/* Estilo del sidebar */
+.sidebar {
+  height: 100%;
+  width: 250px;
+  position: fixed;
+  right: 0;
+  top: 0;
+  background-color: #111;
+  padding-top: 20px;
 }
 
 /* Enlaces del sidebar */
 .sidebar a {
-    padding: 15px 20px;
-    text-decoration: none;
-    font-size: 1;
-    color: white;
-    display: block;
+  padding: 15px 20px;
+  text-decoration: none;
+  font-size: 1;
+  color: white;
+  display: block;
 }
 
 .sidebar a:hover {
-    background-color: #575757;
+  background-color: #575757;
 }
 
 /* Estilo del contenido principal */
 .main-content {
-    margin-right: 250px;
-    padding: 20px;
+  margin-right: 250px;
+  padding: 20px;
+}
+
+.open-btn {
+  margin-left: auto;
+  font-size: 20px;
+  cursor: pointer;
+  background-color: #111;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  position: fixed; /* Lo posicionamos en la pantalla */
+  right: 10px; /* Mueve el botón a la izquierda */
+  top: 20px;
+}
+
+.open-btn:hover {
+  background-color: #444;
 }
