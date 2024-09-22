@@ -51,6 +51,62 @@
     include_once("Frontend\layouts\sidebar.php");
     ?>
     -->
+
+    <!-- carousel de playlists-->
+
+    <link rel="stylesheet" href="Frontend/carousel.css" />
+
+    <div class="playlist">
+      <h2>Playlists</h2>
+      <div class="carousel-container">
+        <button class="prev" onclick="moveSlide(-1)">&#10094;</button>
+        <div class="carousel">
+          <div class="slide">
+            <a href="#" class="card">
+              <img
+                src="Music_temp/MURDER FUNK.jpg"
+                alt="music-image"
+                class="card__img"
+              />
+              <span class="card__footer">
+                <span>Playlist</span>
+                <span>2 minutes!</span>
+              </span>
+            </a>
+          </div>
+
+          <div class="slide">
+            <a href="#" class="card">
+              <img src="Image/Music.jpeg" alt="music-image" class="card__img" />
+              <span class="card__footer">
+                <span>Playlist</span>
+                <span>2 minutes!</span>
+              </span>
+            </a>
+          </div>
+
+          <div class="slide">
+            <a href="#" class="card">
+              <img
+                src="Music_temp/MURDER FUNK.jpg"
+                alt="music-image"
+                class="card__img"
+              />
+              <span class="card__footer">
+                <span>Playlist</span>
+                <span>2 minutes!</span>
+              </span>
+            </a>
+          </div>
+
+          <!-- Puedes agregar más elementos según lo necesites -->
+        </div>
+        <button class="next" onclick="moveSlide(1)">&#10095;</button>
+      </div>
+
+      <script src="Backend/caruosel.js"></script>
+    </div>
+
     <div class="music-grid">
       <div class="container">
         <div class="music-card">
