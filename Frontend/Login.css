@@ -52,6 +52,12 @@ body {
   cursor: pointer;
 }
 
+.buttons:disabled {
+  cursor: not-allowed;
+  background-color: #ccc;
+  color: #666;
+}
+
 .form-login p {
   height: 40px;
   text-align: center;

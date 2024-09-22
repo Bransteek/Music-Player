@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
+  <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="Login.css" />
@@ -9,48 +8,101 @@
     <script src="../Backend/PasswordEncryptor.js"></script>
 
     <style>
-        .form-login {
-            width: 400px;
-            height: 450px;
-            background: #4e4e4e;
-            margin: auto;
-            margin-top: 80px;
-            box-shadow: 7px 13px 37px #000;
-            padding: 20px 30px;
-            border-top: 4px solid purple;
-            color: white;
-            border-radius: 10px;
-        }
+      .form-login {
+        width: 400px;
+        height: 450px;
+        background: #4e4e4e;
+        margin: auto;
+        margin-top: 80px;
+        box-shadow: 7px 13px 37px #000;
+        padding: 20px 30px;
+        border-top: 4px solid purple;
+        color: white;
+        border-radius: 10px;
+      }
     </style>
     <title>Aizi</title>
-</head>
+  </head>
 
-<body>
-    <form action="../Backend/Auth.php" method="post">
-        <section class="form-login">
-            <h5>Registro</h5>
-            <input class="controls" type="text" name="username" placeholder="Usuario" required  autocomplete="off"/>
+  <body>
+    <form action="../Backend/registeruser.php" method="post">
+      <section class="form-login">
+        <h5>Registro</h5>
+        <input
+          class="controls"
+          type="text"
+          name="username"
+          placeholder="Usuario"
+          required
+          autocomplete="off"
+        />
 
-            <input id="passwordvalue" class="controls" type="password" name="password" placeholder="Contraseña"
-                required />
+        <input
+          id="passwordvalue"
+          class="controls"
+          type="password"
+          name="password"
+          placeholder="Contraseña"
+          required
+        />
 
-            <input id="confirmpasswordvalue" class="controls" type="password" name="password" placeholder="Contraseña"
-                required />
+        <input
+          id="confirmpasswordvalue"
+          class="controls"
+          type="password"
+          name="password"
+          placeholder="Contraseña"
+          required
+        />
 
-            <input id="email" class="controls" type="email" name="email" placeholder="Correo" required autocomplete="off"/>
+        <input
+          id="email"
+          class="controls"
+          type="email"
+          name="email"
+          placeholder="Correo"
+          required
+          autocomplete="off"
+        />
 
-            <button onclick="cambiarValor()" class="buttons" type="submit">Submit</button>
+        <button
+          onclick="cambiarValor()"
+          id="submit"
+          class="buttons"
+          type="submit"
+          disabled
+        >
+          Submit
+        </button>
 
-            <script>
-                function cambiarValor() {
-                    var input = document.getElementById("passwordvalue");
-                    input.value = encrypt(input.value);
-                    document.getElementById("passwordvalue").innerText = input.value;
-                }
-            </script>
-            <p><a href="Frontend\Login.html">ya tienes una cuenta</a></p>
-        </section>
+        <script>
+          function cambiarValor() {
+            var input = document.getElementById("passwordvalue");
+            input.value = encrypt(input.value);
+            document.getElementById("passwordvalue").innerText = input.value;
+          }
+        </script>
+
+        <script>
+          const input1 = document.getElementById("passwordvalue");
+          const input2 = document.getElementById("confirmpasswordvalue");
+          const submitBtn = document.getElementById("submit");
+
+          // Función que verifica si los valores son iguales y desbloquea/bloquea el botón
+          function checkStrings() {
+            if (input1.value === input2.value && input1.value !== "") {
+              submitBtn.disabled = false; // Habilita el botón si las cadenas son iguales
+            } else {
+              submitBtn.disabled = true; // Bloquea el botón si no lo son
+            }
+          }
+
+          // Escucha los eventos 'input' en ambos campos
+          input1.addEventListener("input", checkStrings);
+          input2.addEventListener("input", checkStrings);
+        </script>
+        <p><a href="Frontend\Login.html">ya tienes una cuenta</a></p>
+      </section>
     </form>
-</body>
-
+  </body>
 </html>
