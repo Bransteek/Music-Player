@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reproductor de Música</title>
+  <style>
+    body {
+      background-color: #121212;
+      color: white;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 50px;
+    }
+    h1 {
+      margin-bottom: 20px;
+    }
+    audio {
+      margin-top: 20px;
+      width: 100%;
+      max-width: 600px;
+    }
+    .song-list {
+      list-style-type: none;
+      padding: 0;
+      margin: 20px 0;
+    }
+    .song-list li {
+      cursor: pointer;
+      padding: 10px;
+      background-color: #1e1e1e;
+      margin: 5px 0;
+      transition: background-color 0.3s;
+    }
+    .song-list li:hover {
+      background-color: #3a3a3a;
+    }
+  </style>
+</head>
+<body>
+  <h1>Reproductor de Música</h1>
+  <audio id="audio-player" controls>
+    <source id="audio-source" src=""> Tu navegador no soporta el elemento de audio.
+  </audio>
+
+  <ul class="song-list">
+    <iframe src="https://drive.google.com/file/d/1gmcp3FKO6Ikhb9K0UYvHzsfbuow7V_hX/preview"  allow="autoplay"></iframe>
+    <li data-src="https://your_public_server.com/path/to/your_music.mp3">Canción 1</li>
+    <li data-src="link_to_music_file_2.mp3">Canción 2</li>
+    </ul>
+
+  <script>
+    const audioPlayer = document.getElementById('audio-player');
+    const audioSource = document.getElementById('audio-source');
+    const songListItems = document.querySelectorAll('.song-list li');
+
+    songListItems.forEach(item => {
+      item.addEventListener('click', function() {
+        const newSrc = this.getAttribute('data-src');
+        audioSource.src = newSrc;
+        audioPlayer.load(); // Load the new song
+        audioPlayer.play(); // Play automatically
+      });
+    });
+  </script>
+</body>
+</html>
