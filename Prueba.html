@@ -39,15 +39,20 @@
 </head>
 <body>
   <h1>Reproductor de Música</h1>
-  <audio id="audio-player" controls>
-    <source id="audio-source" src=""> Tu navegador no soporta el elemento de audio.
-  </audio>
-
+  
+  <!-- Reproductor de audio que reproduce la canción desde la carpeta Music_temp -->
   <ul class="song-list">
-    <iframe src="https://drive.google.com/file/d/1gmcp3FKO6Ikhb9K0UYvHzsfbuow7V_hX/preview"  allow="autoplay"></iframe>
-    <li data-src="https://your_public_server.com/path/to/your_music.mp3">Canción 1</li>
-    <li data-src="link_to_music_file_2.mp3">Canción 2</li>
-    </ul>
+    <li data-src="Music_temp/song.mp3">Canción descargada desde Google Drive</li>
+  
+  <audio id="audio-player" controls>
+    <source id="audio-source" src="Music_temp/song.mp3" type="audio/mpeg">
+    Tu navegador no soporta el elemento de audio.
+  </audio>
+  </ul>
+  
+
+  <!-- Enlace para descargar la canción -->
+  <a href="/Music-Player/Backend/download.php">Descargar y reproducir canción</a>
 
   <script>
     const audioPlayer = document.getElementById('audio-player');
@@ -58,10 +63,12 @@
       item.addEventListener('click', function() {
         const newSrc = this.getAttribute('data-src');
         audioSource.src = newSrc;
-        audioPlayer.load(); // Load the new song
-        audioPlayer.play(); // Play automatically
+        audioPlayer.load(); // Cargar la nueva canción
+        audioPlayer.play(); // Reproducir automáticamente
       });
     });
   </script>
+
 </body>
 </html>
+
