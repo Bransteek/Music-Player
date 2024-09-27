@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../Login.css" />
+    <link rel="icon" href="../../Image/Logo.ico" type="image/x-icon" />
+    <script src="../../Backend/administrator_management/role_management.php"></script>
+    <title>Aizi</title>
+  </head>
+  <body>
+    <form action="../../Backend/administrator_management/role_management.php" method="post">
+      <section class="form-login">
+        <h5>Gestion Rol</h5>
+        <input
+          class="controls"
+          type="text"
+          name="username"
+          placeholder="Usuario"
+          required
+        />
+        <input
+          id="Rolvalue"
+          class="controls"
+          type="text"
+          name="rol"
+          placeholder="Rol"
+          required
+        />
+        <button onclick="cambiarValor()" class="buttons" type="submit">Submit</button>
+        
+        <script>
+          function cambiarValor() {
+            var input = document.getElementById("Rolvalue");
+            input.value = encrypt(input.value);
+            document.getElementById("Rolvalue").innerText = input.value;
+          }
+        </script>
+        <p><a href="../../index.html">Volver al menu</a></p>
+      </section>
+    </form>
+  </body>
+</html>
