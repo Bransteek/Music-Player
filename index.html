@@ -22,15 +22,12 @@
         placeholder="Buscar..."
       />
     </div>
-    <!--Solo se muestra cuando tenga rol de administrador-->>
+    <!--Solo se muestra cuando tenga rol de administrador-->
     <div class="funtion_admin">
       <a href="../Music-Player/Frontend/administrator_management/admin.html">
         Funciones de administrador
       </a>
     </div>
-
-    
-
 
     <script>
       document.addEventListener("DOMContentLoaded", function () {
@@ -43,8 +40,8 @@
 
               if (query) {
                 //modificar para la web
-                const url = 'Frontend/busqueda.php?query='+query;
-                                 window.location.href = url; // Redirige a la página de resultados de Google
+                const url = "Frontend/busqueda.php?query=" + query;
+                window.location.href = url; // Redirige a la página de resultados de Google
               } else {
                 console.log("Error");
               }
@@ -160,6 +157,5 @@
       </div>
       <!-- Añadir más canciones aquí -->
     </div>
-    
   </body>
 </html>

@@ -1,13 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    
-    
-
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="../administrator_management/admin-options.css"
+    />
+    <link rel="icon" href="../Image/Logo.ico" type="image/x-icon" />
+    <title>Opciones de admin</title>
+  </head>
+  <body>
+    <section class="admin-options">
+      <h5>Opciones de administrador</h5>
+      <div class="menu">
+        <!--Colocar las direcciones-->
+          <button onclick="redireccionar('pagina1.html')">Gestion de roles</button>
+          <button onclick="redireccionar('pagina2.html')">Agregar cancion</button>
+          <button onclick="redireccionar('pagina3.html')">Crear album</button>
+          <button onclick="redireccionar('add-category.html')">Agregar genero</button>
+      </div>
+  </div>
+  <script>
+    function redireccionar(url) {
+        window.location.href = url;
+    }
+</script>
 </html>
