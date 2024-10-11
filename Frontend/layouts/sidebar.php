@@ -18,6 +18,17 @@
     <?php
   }
   ?>
+  <?php
+  if (isset($_SESSION['usuario']) && $_SESSION['rol'] === "artist") {
+    ?>
+    <div class="funtion_artist">
+      <a href="../Music-Player/Frontend/function artist/artist.html">
+        Funciones de artista
+      </a>
+    </div>
+    <?php
+  }
+  ?>
   <a href="javascript:void(0)" onclick="toggleSidebar()">Cerrar ×</a>
 
 </div>
