@@ -136,24 +136,47 @@ if (!isset($_SESSION['usuario'])) {
   </div>
 </body>
 <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            // Comprobar si la sesión se está volviendo desde la navegación de "Atrás"
-            if (!sessionStorage.getItem("visited")) {
-                // Si no hay valor en sessionStorage, significa que es la primera vez que visita esta página
+    document.addEventListener("DOMContentLoaded", function () {
+        // Detectar la primera visita o un refresco
+        window.addEventListener("pageshow", function (event) {
+            if (event.persisted || performance.navigation.type === 2) {
+                // Navegación hacia atrás
+                if (sessionStorage.getItem("visited")) {
+                    fetch('../Music-Player/Backend/logout.php')
+                        .then(response => {
+                            if (response.ok) {
+                                sessionStorage.removeItem("visited");
+                                window.location.href = 'Frontend/Login.html';
+                            }
+                        });
+                }
+            } else if (performance.navigation.type === 1) {
+                // Refresco
                 sessionStorage.setItem("visited", "true");
             } else {
-                // Si hay un valor, significa que se está devolviendo con el botón de "Atrás"
-                // Destruir la sesión en el servidor
-                fetch('../Music-Player/Backend/logout.php')
-                    .then(response => {
-                        if (response.ok) {
-                            // Redirigir a login una vez destruida la sesión
-                            sessionStorage.removeItem("visited");
-                            window.location.href = 'Frontend/Login.html';
-                        }
-                    });
+                // Visita normal
+                sessionStorage.setItem("visited", "true");
             }
         });
-    </script>
+
+        // Establecer bandera cuando la página esté refrescando
+        let isRefreshing = false;
+
+        window.addEventListener("beforeunload", function (event) {
+            // Marcar que se está refrescando la página
+            isRefreshing = true;
+        });
+
+        window.addEventListener("unload", function () {
+            // Verificar si es un refresco o cierre/navegación fuera
+            if (!isRefreshing) {
+                // Si no es refresco, destruir la sesión
+                navigator.sendBeacon('../Music-Player/Backend/logout.php');
+            }
+        });
+    });
+</script>
+
+
 
 </html>
