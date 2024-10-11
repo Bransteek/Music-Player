@@ -1,3 +1,13 @@
+<?php
+session_start();
+
+// Verificar si el usuario está en la sesión
+if (!isset($_SESSION['usuario'])) {
+    // Si no está en la sesión, redirigir a login.php
+    header("Location: Frontend/Login.html");
+    exit();
+}
+?>
 <!DOCTYPE html>
 <html>
 
@@ -125,5 +135,25 @@
     <!-- Añadir más canciones aquí -->
   </div>
 </body>
+<script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Comprobar si la sesión se está volviendo desde la navegación de "Atrás"
+            if (!sessionStorage.getItem("visited")) {
+                // Si no hay valor en sessionStorage, significa que es la primera vez que visita esta página
+                sessionStorage.setItem("visited", "true");
+            } else {
+                // Si hay un valor, significa que se está devolviendo con el botón de "Atrás"
+                // Destruir la sesión en el servidor
+                fetch('../Music-Player/Backend/logout.php')
+                    .then(response => {
+                        if (response.ok) {
+                            // Redirigir a login una vez destruida la sesión
+                            sessionStorage.removeItem("visited");
+                            window.location.href = 'Frontend/Login.html';
+                        }
+                    });
+            }
+        });
+    </script>
 
 </html>
