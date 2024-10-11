@@ -3,11 +3,24 @@
 <button class="open-btn" onclick="toggleSidebar()">☰ Abrir</button>
 
 <div id="mySidebar" class="sidebar">
+  <a href="index.php">Inicio</a>
+  <a href="#Favoritos">Favortitos</a>
+  <a href="#Historial">Historial</a>
+  <a href="#playlist">Playlist</a>
+  <?php
+  session_start();
+  if (isset($_SESSION["usario"]) && $_SESSION["rol"] = "admin") {
+    ?>
+    <div class="funtion_admin">
+      <a href="../Music-Player/Frontend/administrator_management/admin.html">
+        Funciones de administrador
+      </a>
+    </div>
+    <?php
+  }
+  ?>
   <a href="javascript:void(0)" onclick="toggleSidebar()">Cerrar ×</a>
-  <a href="#home">Inicio</a>
-  <a href="#services">Servicios</a>
-  <a href="#about">Acerca de</a>
-  <a href="#contact">Contacto</a>
+
 </div>
 
 <script>
@@ -23,4 +36,6 @@
         "translateX(-250px)"; /* Mueve el contenido a la izquierda */
     }
   }
+
+  window.dispatchEvent(new Event('resize'));
 </script>

@@ -21,8 +21,8 @@ $row = $stmt->fetch(PDO::FETCH_ASSOC);
 if ($row) {
     // Asegúrate de que el campo tiene un valor
     if (isset($row['song_file'])) {
-       $archivo_mp3 = $row['song_file'];
-       
+        $archivo_mp3 = $row['song_file'];
+
         // Obtener los datos binarios directamente desde PDO
         $contenido_binario = $archivo_mp3;
 

@@ -33,4 +33,3 @@ if (file_put_contents($destination, file_get_contents($fileUrl))) {
     echo "Error al descargar el archivo.";
 }
 ?>
-
