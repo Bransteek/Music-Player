@@ -1,3 +1,13 @@
+<?php
+session_start();
+
+// Verificar si el usuario está en la sesión
+if (!isset($_SESSION['usuario'])) {
+    // Si no está en la sesión, redirigir a login.php
+    header("Location: Frontend/Login.html");
+    exit();
+}
+?>
 <!DOCTYPE html>
 <html>
 
@@ -125,5 +135,48 @@
     <!-- Añadir más canciones aquí -->
   </div>
 </body>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Detectar la primera visita o un refresco
+        window.addEventListener("pageshow", function (event) {
+            if (event.persisted || performance.navigation.type === 2) {
+                // Navegación hacia atrás
+                if (sessionStorage.getItem("visited")) {
+                    fetch('../Music-Player/Backend/logout.php')
+                        .then(response => {
+                            if (response.ok) {
+                                sessionStorage.removeItem("visited");
+                                window.location.href = 'Frontend/Login.html';
+                            }
+                        });
+                }
+            } else if (performance.navigation.type === 1) {
+                // Refresco
+                sessionStorage.setItem("visited", "true");
+            } else {
+                // Visita normal
+                sessionStorage.setItem("visited", "true");
+            }
+        });
+
+        // Establecer bandera cuando la página esté refrescando
+        let isRefreshing = false;
+
+        window.addEventListener("beforeunload", function (event) {
+            // Marcar que se está refrescando la página
+            isRefreshing = true;
+        });
+
+        window.addEventListener("unload", function () {
+            // Verificar si es un refresco o cierre/navegación fuera
+            if (!isRefreshing) {
+                // Si no es refresco, destruir la sesión
+                navigator.sendBeacon('../Music-Player/Backend/logout.php');
+            }
+        });
+    });
+</script>
+
+
 
 </html>

@@ -8,12 +8,22 @@
   <a href="#Historial">Historial</a>
   <a href="#playlist">Playlist</a>
   <?php
-  session_start();
-  if (isset($_SESSION["usario"]) && $_SESSION["rol"] = "admin") {
+  if (isset($_SESSION['usuario']) && $_SESSION['rol'] === "admin") {
     ?>
     <div class="funtion_admin">
       <a href="../Music-Player/Frontend/administrator_management/admin.html">
         Funciones de administrador
+      </a>
+    </div>
+    <?php
+  }
+  ?>
+  <?php
+  if (isset($_SESSION['usuario']) && $_SESSION['rol'] === "artist") {
+    ?>
+    <div class="funtion_artist">
+      <a href="../Music-Player/Frontend/function artist/artist.html">
+        Funciones de artista
       </a>
     </div>
     <?php

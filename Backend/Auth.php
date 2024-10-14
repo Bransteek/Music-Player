@@ -30,12 +30,13 @@ if ($conn) {
         echo "Usuario o Contraseña incorrectos";
     } else {
         foreach ($results as $row) {
+            session_destroy();
             session_start();
             $_SESSION['usuario'] = $row['user_name'];
             $_SESSION['rol'] = $row['rol_name'];
         }
 
-        header("Location: ../index.html");
+        header("Location: ../index.php");
         exit();
     }
 
