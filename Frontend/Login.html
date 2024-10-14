@@ -27,8 +27,10 @@
           placeholder="Contraseña"
           required
         />
-        <button onclick="cambiarValor()" class="buttons" type="submit">Submit</button>
-        
+        <button onclick="cambiarValor()" class="buttons" type="submit">
+          Submit
+        </button>
+
         <script>
           function cambiarValor() {
             var input = document.getElementById("passwordvalue");
@@ -36,7 +38,10 @@
             document.getElementById("passwordvalue").innerText = input.value;
           }
         </script>
-        <p><a href="#">¿Has olvidado tu contraseña?</a></p>
+        <p>
+          <a href="#">¿Has olvidado tu contraseña?</a> <br />
+          <a href="register.html">¿No tienes cuenta?</a>
+        </p>
       </section>
     </form>
   </body>
