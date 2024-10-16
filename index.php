@@ -16,6 +16,7 @@ if (!isset($_SESSION['usuario'])) {
   <link rel="stylesheet" href="../Music-Player/Frontend/Menu.css" />
 
   <link rel="icon" href="../Music-Player/Image/Logo.ico" type="image/x-icon" />
+  <link rel="stylesheet" href="../Music-Player/Frontend/carousel.css" />
   <title>Menu</title>
 </head>
 
@@ -54,7 +55,7 @@ if (!isset($_SESSION['usuario'])) {
 
   <!-- carousel de playlists-->
 
-  <link rel="stylesheet" href="Frontend/carousel.css" />
+
 
   <div class="carousel-container">
     <h2>Playlists</h2>
