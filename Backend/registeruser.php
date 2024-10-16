@@ -1,5 +1,5 @@
 <?php
-include_once(BD.php);
+include_once("BD.php");
 
 
 

@@ -1,7 +1,7 @@
 .carousel-container {
   position: relative;
   width: 100%;
-  max-width: 90%; /* Ajusta el ancho máximo */
+  max-width: 70%; /* Ajusta el ancho máximo */
   margin: auto;
   overflow: hidden;
 }
@@ -9,6 +9,7 @@
 .carousel {
   display: flex;
   transition: transform 0.5s ease-in-out;
+  width: 100%;
 }
 
 .slide {

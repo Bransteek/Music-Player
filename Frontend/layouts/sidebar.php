@@ -4,7 +4,7 @@
 
 <div id="mySidebar" class="sidebar">
   <a href="index.php">Inicio</a>
-  <a href="#Favoritos">Favortitos</a>
+  <a href="#Favoritos">Favoritos</a>
   <a href="#Historial">Historial</a>
   <a href="#playlist">Playlist</a>
   <?php
@@ -17,8 +17,6 @@
     </div>
     <?php
   }
-  ?>
-  <?php
   if (isset($_SESSION['usuario']) && $_SESSION['rol'] === "artist") {
     ?>
     <div class="funtion_artist">
@@ -37,13 +35,13 @@
   function toggleSidebar() {
     const sidebar = document.getElementById("mySidebar");
     const content = document.getElementById("mainContent");
-    if (sidebar.style.width === "250px") {
+    if (sidebar.style.width === "200px") {
       sidebar.style.width = "0";
       content.style.transform = "translateX(0)";
     } else {
-      sidebar.style.width = "250px";
+      sidebar.style.width = "200px";
       content.style.transform =
-        "translateX(-250px)"; /* Mueve el contenido a la izquierda */
+        "translateX(-200px)"; /* Mueve el contenido a la izquierda */
     }
   }
 
