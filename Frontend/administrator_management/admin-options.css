@@ -38,8 +38,13 @@ body {
   gap: 10px;
 }
 
+.volver {
+  align-items: center;
+  margin: auto;
+}
+
 /* Estilos de los botones */
-.menu button {
+button {
   padding: 14px 20px;
   background-color: #800080;
   color: white;
@@ -50,6 +55,9 @@ body {
   transition: background-color 0.3s;
 }
 
-.menu button:hover {
+
+button:hover {
   background-color: #9932cc;
 }
+
+
