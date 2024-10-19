@@ -12,8 +12,11 @@
     }
     
     // Ejemplo de uso
-    $url = $_POST['songfile'];  // El enlace de Google Drive enviado por POST
-    $Song_File = obtenerIdGoogleDrive($url);  // Extraemos solo el ID
+    $urlf = $_POST['songfile'];  // El enlace de Google Drive enviado por POST
+    $urli = $_POST['songimage'];
+    $Song_File = obtenerIdGoogleDrive($urlf);  // Extraemos solo el ID
+    $Song_Image = obtenerIdGoogleDrive($urli);
+    
     
     echo "El ID del archivo es: " . $Song_File_ID;
     
@@ -42,7 +45,7 @@
         $Album  = $_POST['album'];
         $Artist  = $_POST['artist'];
         
-        $Song_Image  = $_POST['songimage'];
+
         if($Album == ""){
             $sql = "INSERT INTO song (song_name, duration, song_category_id, song_artist_id, 
                 likes, dislikes, visualizations,song_file, song_image )

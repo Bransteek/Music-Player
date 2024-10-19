@@ -2,8 +2,20 @@
 // Verificar si se ha pasado el nombre de la canción y la URL de la carátula por la URL
 if (isset($_GET['song_name']) && isset($_GET['song_image'])) {
     $songName = htmlspecialchars($_GET['song_name']);
-    $song_image = htmlspecialchars($_GET['song_image']);
+    $songImageURL = htmlspecialchars($_GET['song_image']);
     $songPath = 'Music_temp/' . $songName . '.mp3'; // Ruta a la canción
+
+    // Crear un nombre de archivo para la imagen
+    $imageFileName = preg_replace('/[^a-zA-Z0-9_-]/', '_', $songName) . '.jpg'; // Reemplazar caracteres no válidos
+    $imagePath = 'album_covers/' . $imageFileName; // Ruta de la imagen
+
+    // Descargar la imagen y guardarla permanentemente en el servidor
+    if (file_put_contents($imagePath, file_get_contents($songImageURL)) === false) {
+        // Si la descarga falla, redirigir a la página principal
+        header("Location: Prueba.php");
+        exit;
+    }
+
 } else {
     // Si no se ha pasado la información necesaria, redirigir a la página principal
     header("Location: Prueba.php");
@@ -61,15 +73,20 @@ if (isset($_GET['song_name']) && isset($_GET['song_image'])) {
 </head>
 <body>
 <div class="song-container">
-    <!-- Carátula del álbum -->
+    <!-- Carátula del álbum con opción de descarga -->
     <div class="album-cover">
-        <img src="https://drive.google.com/uc?export=view&id=1Q5NIvwAA-uwLWVrfKGGLIM67efcumeDG.jpg" alt="Carátula del álbum">
+        <!-- Enlace con atributo download para descargar la imagen -->
+        <a href="<?php echo $imagePath; ?>" download="album-cover.jpg">
+            <img src="<?php echo $imagePath; ?>" alt="music-image" class="card__img" />
+        </a>
     </div>
+    
     <!-- Información de la canción -->
     <div class="song-info">
         <h2><?php echo $songName; ?></h2>
         <p>Artista Desconocido</p>
     </div>
+    
     <!-- Controles de reproducción -->
     <audio controls>
         <source src="<?php echo $songPath; ?>" type="audio/mpeg">
