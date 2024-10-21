@@ -40,7 +40,7 @@ body {
 
 .volver {
   position: absolute;
-  bottom: 85px;
+  bottom: 30vh;
   left: 50%;
   transform: translateX(-50%);
 }
