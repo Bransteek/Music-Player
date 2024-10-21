@@ -10,15 +10,16 @@ $songName = htmlspecialchars($_GET['song_name']); // Asegúrate de que estés re
 
 // URL del archivo de Google Drive para descargar
 $fileUrl = 'https://drive.google.com/uc?export=download&id=' . $songFile;
+$fileUrlI = 'https://drive.google.com/uc?export=download&id=' . $songImageURL;
 
-
+$destinationI = 'C:/xampp/htdocs/Music-Player/Music_temp/' . $songName . 'Image.jpg';
 // Ruta donde se guardará la canción descargada
 $destination = 'C:/xampp/htdocs/Music-Player/Music_temp/' . $songName . '.mp3';
 
 // Intentar descargar el archivo
-if (file_put_contents($destination, file_get_contents($fileUrl))) {
+if (file_put_contents($destination, file_get_contents($fileUrl))&&file_put_contents($destinationI, file_get_contents($fileUrlI))) {
     // Si la descarga es exitosa, redirigir a Portada_music.php
-    header("Location: Portada_music.php?song_name=" . urlencode($songName) . "&song_image=" . urlencode($songImageURL));
+    header("Location: ../Portada_music.php?song_name=" . urlencode($songName) );
     exit();
 } else {
     echo "Error al descargar el archivo.";
