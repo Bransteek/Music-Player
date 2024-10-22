@@ -1,8 +1,9 @@
 <?php
 // Verificar si se ha pasado el nombre de la canción y la URL de la carátula por la URL
-if (isset($_GET['song_name'])&&isset($_GET['song_artist'])) {
+if (isset($_GET['song_name'])&&isset($_GET['song_artist'])&&isset($_GET['song_id'])) {
     $songName = htmlspecialchars($_GET['song_name']);
     $song_artist = htmlspecialchars($_GET['song_artist']);
+    $song_id = htmlspecialchars($_GET['song_id']);
     $songPath = 'Music_temp/' . $songName . '.mp3'; // Ruta a la canción
     $imagePath = 'Music_temp/' . $songName . 'Image.jpg'; // Ruta de la imagen
 } else {
@@ -10,7 +11,44 @@ if (isset($_GET['song_name'])&&isset($_GET['song_artist'])) {
     header("Location: Prueba.php");
     exit;
 }
+session_start();
+if (!isset($_SESSION['usuario'])) {
+    // Si no está en la sesión, redirigir a login.php
+    header("Location: Frontend/Login.html");
+    exit();
+} else {
+    $username = $_SESSION['usuario'];
+    $user_name = htmlspecialchars($username);
+}
+// Incluye el archivo de conexión
+include_once('Backend/BD.php');
+$conn = conexion::conexion_bd();
+
+// Suponiendo que ya tienes la variable $user_name disponible
+
+try {
+    // Prepara la consulta
+    $query = "SELECT playlist_name, playlist_id FROM song_playlist 
+                RIGHT JOIN song ON song.song_id = song_playlist.sp_song_id
+                RIGHT JOIN playlist ON playlist.playlist_id = song_playlist.sp_playlist_id
+                WHERE playlist.playlist_user_name = :user_name";
+    
+    $stmt = $conn->prepare($query); // $conn debe ser la conexión PDO
+
+    // Asigna el valor a la variable
+    $stmt->bindParam(':user_name', $user_name);
+    $stmt->execute();
+
+    // Obtiene los resultados
+    $playlists = $stmt->fetchAll(PDO::FETCH_ASSOC);
+} catch (PDOException $e) {
+    // Manejo de errores
+    echo "Error en la consulta: " . $e->getMessage();
+}
+
+
 ?>
+
 
 <!DOCTYPE html>
 <html lang="es">
@@ -176,13 +214,15 @@ if (isset($_GET['song_name'])&&isset($_GET['song_artist'])) {
         }
 
         .modal-content {
-            background-color: white;
+            background-color: black; /* Cambiado a negro */
+            color: white; /* Texto en blanco */
             padding: 20px;
             border-radius: 10px;
             width: 300px;
             text-align: center;
             position: relative;
         }
+
 
         .close-btn {
             position: absolute;
@@ -215,14 +255,61 @@ if (isset($_GET['song_name'])&&isset($_GET['song_artist'])) {
 <div id="playlistModal" class="modal">
     <div class="modal-content">
         <span class="close-btn">&times;</span>
-        <h2>Crear nueva playlist</h2>
-        <form id="playlistForm">
-            <label for="playlistName">Nombre de la Playlist:</label>
-            <input type="text" id="playlistName" name="playlistName" required>
-            <button type="submit" id="createPlaylistBtn">Crear</button>
+        <h2 id="modalTitle">Crear nueva playlist</h2>
+        <form id="playlistForm" action="Backend/add_playlist.php" method="POST" style="display: none;">
+        <label for="playlistName">Nombre de la Playlist:</label>
+        <input type="text" id="playlistName" name="playlistName" required>
+        <button type="submit" id="createPlaylistBtn">Crear</button>
+        <button onclick="cambiarValor()" class="buttons" type="submit" id="backBtn">Volver</button>
         </form>
+
+        <button type="button" id="createProductionListBtn">Crear lista de producción</button>
+        <h3>Mis Playlists:</h3>
+        <ul id="playlistList">
+            <?php foreach ($playlists as $playlist):
+                 
+                 echo '<li onclick="window.location.href=\'Backend/add_song_playlist.php?song_id=' . urlencode($song_id) . '&playlist_id=' . urlencode($playlist['playlist_id']) . '&song_name=' . urlencode($songName) . '&song_artist=' . urlencode($song_artist) . '\'">' . htmlspecialchars($playlist['playlist_name']) . '</li>';
+
+                 
+                
+            endforeach; ?>
+            
+        </ul>
     </div>
 </div>
+
+<script>
+    function cambiarValor() {
+            var input = document.getElementById("value");
+            input.value = encrypt(input.value);
+            document.getElementById("value").innerText = input.value;
+          }
+    // Muestra el formulario y oculta el botón de "Crear lista de producción"
+    document.getElementById('createProductionListBtn').addEventListener('click', function() {
+        // Cambia el título dinámicamente
+        document.getElementById('modalTitle').textContent = 'Crear nueva playlist';
+        
+        // Muestra el formulario
+        document.getElementById('playlistForm').style.display = 'block';
+        
+        // Oculta el botón de "Crear lista de producción"
+        this.style.display = 'none';
+    });
+
+    // Vuelve al estado inicial cuando se hace clic en "Volver"
+    document.getElementById('backBtn').addEventListener('click', function() {
+        // Cambia el título nuevamente al estado inicial
+        document.getElementById('modalTitle').textContent = 'Crear nueva playlist';
+        
+        // Oculta el formulario
+        document.getElementById('playlistForm').style.display = 'none';
+        
+        // Muestra el botón "Crear lista de producción"
+        document.getElementById('createProductionListBtn').style.display = 'block';
+    });
+</script>
+
+
 
 
 <!-- Controles de reproducción en la parte inferior -->
@@ -379,14 +466,20 @@ window.addEventListener('click', (event) => {
 
 // Manejar la creación de la playlist
 playlistForm.addEventListener('submit', (e) => {
-    e.preventDefault();
+    // Quitar preventDefault para permitir el envío del formulario
+    // e.preventDefault(); // Eliminar esta línea
+    
     const playlistName = document.getElementById('playlistName').value;
 
     if (playlistName) {
+        // Si quieres mostrar una alerta antes de enviar, puedes hacerlo aquí
         alert(`Playlist "${playlistName}" creada con éxito!`);
-        playlistModal.style.display = 'none'; // Ocultar el modal
+        
+        // Asegúrate de que el formulario se envíe
+        playlistForm.submit(); // Esto enviará el formulario a add_playlist.php
     }
 });
+
 
         
     
