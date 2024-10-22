@@ -26,7 +26,11 @@ if (!isset($_SESSION['usuario'])) {
 
 if ($conn) {
     // Preparar la consulta SQL
-    $sql = "INSERT INTO song_playlist (sp_playlist_id, sp_song_id) VALUES (:playlist_id, :song_id)";
+    $sql = "INSERT INTO song_playlist (sp_playlist_id, sp_song_id)
+    SELECT :playlist_id, :song_id
+    WHERE NOT EXISTS (
+    SELECT 1 FROM song_playlist 
+    WHERE sp_playlist_id = :playlist_id AND sp_song_id = :song_id);";
     
     // Preparar la sentencia
     $stmt = $conn->prepare($sql);

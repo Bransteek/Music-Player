@@ -28,10 +28,8 @@ $conn = conexion::conexion_bd();
 
 try {
     // Prepara la consulta
-    $query = "SELECT playlist_name, playlist_id FROM song_playlist 
-                RIGHT JOIN song ON song.song_id = song_playlist.sp_song_id
-                RIGHT JOIN playlist ON playlist.playlist_id = song_playlist.sp_playlist_id
-                WHERE playlist.playlist_user_name = :user_name";
+    $query = "SELECT playlist_name, playlist_id FROM playlist 
+              WHERE playlist.playlist_user_name = :user_name";
     
     $stmt = $conn->prepare($query); // $conn debe ser la conexión PDO
 
