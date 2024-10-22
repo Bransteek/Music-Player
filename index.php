@@ -100,38 +100,47 @@ if (!isset($_SESSION['usuario'])) {
   <script src="Backend/caruosel.js"></script>
 
 
-  <div class="music-grid">
-    <div class="container">
-      <div class="music-card">
-        <a href="Prueba.html">
-          <img src="../Music-Player/Image/Music.jpeg" alt="Portada de Canción 1" class="thumbnail" />
+  <?php
+include_once("Backend/BD.php");
 
-          <div class="song-info">
-            <h3 class="song-title">Murder funk</h3>
-            <p class="song-artist">Artista 1</p>
-          </div>
-        </a>
-      </div>
-    </div>
+// Conectar a la base de datos usando la clase conexion
+$conn = conexion::conexion_bd();
 
-    <div class="container">
-      <div class="music-card">
-        <img src="https://via.placeholder.com/150" alt="Portada de Canción" class="thumbnail" />
-        <div class="song-info">
-          <h3 class="song-title">Canción 2</h3>
-          <p class="song-artist">Artista 2</p>
-        </div>
-      </div>
-    </div>
-    <div class="container">
-      <div class="music-card">
-        <img src="https://via.placeholder.com/150" alt="Portada de Canción" class="thumbnail" />
-        <div class="song-info">
-          <h3 class="song-title">Canción 3</h3>
-          <p class="song-artist">Artista 3</p>
-        </div>
-      </div>
-    </div>
+if ($conn) {
+    // Consulta para obtener los nombres de las canciones junto con sus imágenes y archivos
+    $sql = "SELECT song_name, song_image, song_file, artist_name, song_id 
+            FROM song 
+            JOIN artist ON song.song_artist_id = artist.artist_id"; // Ajusta según tu esquema de base de datos
+    $stmt = $conn->prepare($sql);
+    $stmt->execute();
+    $canciones = $stmt->fetchAll(PDO::FETCH_ASSOC);
+} else {
+    echo "Error en la conexión a la base de datos.";
+}
+?>
+
+<div class="music-grid">
+    <?php if (!empty($canciones)): ?>
+        <?php foreach ($canciones as $cancion): ?>
+            <div class="container">
+                <div class="music-card">
+                    <a href="Backend/download.php?song_file_id=<?php echo urlencode($cancion['song_file']);; ?>&song_name=<?php echo urlencode($cancion['song_name']); ?>&song_artist=<?php echo urlencode($cancion['artist_name']); ?>&song_image=<?php echo urlencode($cancion['song_image']); ?>&song_id=<?php echo urlencode($cancion['song_id']); ?>">
+                        <img src="Music_temp/<?php echo htmlspecialchars($cancion['song_name']);?>Image.jpg" alt="Portada de <?php echo htmlspecialchars($cancion['song_name']); ?>" class="thumbnail" />
+                        <div class="song-info">
+                            <h3 class="song-title"><?php echo htmlspecialchars($cancion['song_name']); ?></h3>
+                            <p class="song-artist"><?php echo htmlspecialchars($cancion['artist_name']); ?></p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        <?php endforeach; ?>
+    <?php else: ?>
+        <p>No hay canciones disponibles.</p>
+    <?php endif; ?>
+</div>
+
+
+    
     <!-- Añadir más canciones aquí -->
   </div>
 </body>
