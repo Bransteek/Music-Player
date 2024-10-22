@@ -7,7 +7,7 @@ $conn = conexion::conexion_bd();
 
 if ($conn) {
     // Consulta para obtener los nombres de las canciones
-    $sql = "SELECT song_name,song_image,song_file FROM song"; // Ajusta según tu esquema de base de datos
+    $sql = "SELECT song_name,song_image,song_file,artist_name FROM song  JOIN artist ON song.song_artist_id= artist.artist_id"; // Ajusta según tu esquema de base de datos
     $stmt = $conn->prepare($sql);
     $stmt->execute();
     $canciones = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -59,7 +59,7 @@ if ($conn) {
     // Iterar sobre los resultados de la consulta y generar la lista de canciones
     foreach ($canciones as $cancion) {
         // Redirigir a presentacion_cancion.php pasando el nombre de la canción
-        echo '<li onclick="window.location.href=\'Backend/download.php?song_file_id=' . urlencode($cancion['song_file']) . '&song_image=' . urlencode($cancion['song_image']). '&song_name=' . urlencode($cancion['song_name'])  . '\'">' . htmlspecialchars($cancion['song_name']) . '</li>';
+        echo '<li onclick="window.location.href=\'Backend/download.php?song_file_id=' . urlencode($cancion['song_file']) . '&song_image=' . urlencode($cancion['song_image']). '&song_name=' . urlencode($cancion['song_name'])  . '&song_artist=' . urlencode($cancion['artist_name'])  . '\'">' . htmlspecialchars($cancion['song_name']) . '</li>';
 
     }
     ?>
