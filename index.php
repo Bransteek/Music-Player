@@ -1,10 +1,39 @@
 <?php
 session_start();
+
 // Verificar si el usuario está en la sesión
 if (!isset($_SESSION['usuario'])) {
-  // Si no está en la sesión, redirigir a login.php
-  header("Location: Frontend/Login.html");
-  exit();
+    // Si no está en la sesión, redirigir a login.php
+    header("Location: Frontend/Login.html");
+    exit();
+} else {
+    include_once("Backend/BD.php");
+  
+    // Conectar a la base de datos usando la clase conexion
+    $conn = conexion::conexion_bd();
+  
+    $username = $_SESSION['usuario'];
+    $user_name = htmlspecialchars($username);
+  
+    if ($conn) {
+        // Consulta para obtener los nombres de las playlists
+        $sql = "SELECT playlist_name, playlist_id FROM playlist 
+                WHERE playlist_user_name = :user_name"; // Ajusta según tu esquema de base de datos
+
+        // Preparar la consulta
+        $stmt = $conn->prepare($sql);
+
+        // Vincular el parámetro
+        $stmt->bindParam(':user_name', $user_name);
+
+        // Ejecutar la consulta
+        $stmt->execute();
+
+        // Obtener los resultados
+        $playlists = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    } else {
+        echo "Error en la conexión a la base de datos.";
+    }
 }
 ?>
 <!DOCTYPE html>
@@ -60,37 +89,47 @@ if (!isset($_SESSION['usuario'])) {
   <div class="carousel-container">
     <h2>Playlists</h2>
 
-    <div class="carousel">
-      <button class="prev" onclick="moveSlide(-1)">&#10094;</button>
-      <div class="slide">
-        <a href="#" class="card">
-          <img src="Music_temp/MURDER FUNK.jpg" alt="music-image" class="card__img" />
-          <span class="card__footer">
-            <span>Playlist</span>
-            <span>2 minutes!</span>
-          </span>
-        </a>
-      </div>
 
-      <div class="slide">
-        <a href="#" class="card">
-          <img src="Image/Music.jpeg" alt="music-image" class="card__img" />
-          <span class="card__footer">
-            <span>Playlist</span>
-            <span>2 minutes!</span>
-          </span>
-        </a>
-      </div>
 
-      <div class="slide">
-        <a href="#" class="card">
-          <img src="Music_temp/MURDER FUNK.jpg" alt="music-image" class="card__img" />
-          <span class="card__footer">
-            <span>Playlist</span>
-            <span>2 minutes!</span>
+
+
+
+
+<div class="music-grid">
+    <?php if (!empty($playlists)): ?>
+        <?php foreach ($playlists as $playlist): ?>
+            <div class="carousel">
+            <button class="prev" onclick="moveSlide(-1)">&#10094;</button>
+            <div class="slide">
+                    <a href="Prueba.php" class="card">
+                        <img src="Music_temp/Imagen playlist.jpg" alt="Portada de <?php echo htmlspecialchars($playlist['song_name']); ?>" class="thumbnail" />
+                        <span class="card__footer">
+                        <span><?php echo htmlspecialchars($playlist['playlist_name']); ?></span>
+            
           </span>
-        </a>
-      </div>
+                            
+                        
+                    </a>
+                </div>
+            
+        <?php endforeach; ?>
+    <?php else: ?>
+        <p>No hay canciones disponibles.</p>
+    <?php endif; ?>
+</div>
+
+
+
+
+
+
+
+
+
+
+      
+
+      
       <button class="next" onclick="moveSlide(1)">&#10095;</button>
       <!-- Puedes agregar más elementos según lo necesites -->
     </div>
