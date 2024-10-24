@@ -3,37 +3,37 @@ session_start();
 
 // Verificar si el usuario está en la sesión
 if (!isset($_SESSION['usuario'])) {
-    // Si no está en la sesión, redirigir a login.php
-    header("Location: Frontend/Login.html");
-    exit();
+  // Si no está en la sesión, redirigir a login.php
+  header("Location: Frontend/Login.html");
+  exit();
 } else {
-    include_once("Backend/BD.php");
-  
-    // Conectar a la base de datos usando la clase conexion
-    $conn = conexion::conexion_bd();
-  
-    $username = $_SESSION['usuario'];
-    $user_name = htmlspecialchars($username);
-  
-    if ($conn) {
-        // Consulta para obtener los nombres de las playlists
-        $sql = "SELECT playlist_name, playlist_id FROM playlist 
+  include_once("Backend/BD.php");
+
+  // Conectar a la base de datos usando la clase conexion
+  $conn = conexion::conexion_bd();
+
+  $username = $_SESSION['usuario'];
+  $user_name = htmlspecialchars($username);
+
+  if ($conn) {
+    // Consulta para obtener los nombres de las playlists
+    $sql = "SELECT playlist_name, playlist_id FROM playlist 
                 WHERE playlist_user_name = :user_name"; // Ajusta según tu esquema de base de datos
 
-        // Preparar la consulta
-        $stmt = $conn->prepare($sql);
+    // Preparar la consulta
+    $stmt = $conn->prepare($sql);
 
-        // Vincular el parámetro
-        $stmt->bindParam(':user_name', $user_name);
+    // Vincular el parámetro
+    $stmt->bindParam(':user_name', $user_name);
 
-        // Ejecutar la consulta
-        $stmt->execute();
+    // Ejecutar la consulta
+    $stmt->execute();
 
-        // Obtener los resultados
-        $playlists = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    } else {
-        echo "Error en la conexión a la base de datos.";
-    }
+    // Obtener los resultados
+    $playlists = $stmt->fetchAll(PDO::FETCH_ASSOC);
+  } else {
+    echo "Error en la conexión a la base de datos.";
+  }
 }
 ?>
 <!DOCTYPE html>
@@ -95,28 +95,30 @@ if (!isset($_SESSION['usuario'])) {
 
 
 
-<div class="music-grid">
-    <?php if (!empty($playlists)): ?>
-        <?php foreach ($playlists as $playlist): ?>
-            <div class="carousel">
-            <button class="prev" onclick="moveSlide(-1)">&#10094;</button>
+    <div class="music-grid">
+      <?php if (!empty($playlists)): ?>
+
+        <div class="carousel">
+          <button class="prev" onclick="moveSlide(-1)">&#10094;</button>
+          <?php foreach ($playlists as $playlist): ?>
             <div class="slide">
-                    <a href="Prueba.php" class="card">
-                        <img src="Music_temp/Imagen playlist.jpg" alt="Portada de <?php echo htmlspecialchars($playlist['song_name']); ?>" class="thumbnail" />
-                        <span class="card__footer">
-                        <span><?php echo htmlspecialchars($playlist['playlist_name']); ?></span>
-            
-          </span>
-                            
-                        
-                    </a>
-                </div>
-            
-        <?php endforeach; ?>
-    <?php else: ?>
-        <p>No hay canciones disponibles.</p>
-    <?php endif; ?>
-</div>
+              <a href="Prueba.php" class="card">
+                <img src="Music_temp/Imagen playlist.jpg"
+                  alt="Portada de <?php echo htmlspecialchars($playlist['song_name']); ?>" class="thumbnail" />
+                <span class="card__footer">
+                  <span><?php echo htmlspecialchars($playlist['playlist_name']); ?></span>
+
+                </span>
+
+
+              </a>
+            </div>
+
+          <?php endforeach; ?>
+        <?php else: ?>
+          <p>No hay playlist disponibles.</p>
+        <?php endif; ?>
+      </div>
 
 
 
@@ -127,9 +129,9 @@ if (!isset($_SESSION['usuario'])) {
 
 
 
-      
 
-      
+
+
       <button class="next" onclick="moveSlide(1)">&#10095;</button>
       <!-- Puedes agregar más elementos según lo necesites -->
     </div>
@@ -140,12 +142,12 @@ if (!isset($_SESSION['usuario'])) {
 
 
   <?php
-include_once("Backend/BD.php");
+  include_once("Backend/BD.php");
 
-// Conectar a la base de datos usando la clase conexion
-$conn = conexion::conexion_bd();
+  // Conectar a la base de datos usando la clase conexion
+  $conn = conexion::conexion_bd();
 
-if ($conn) {
+  if ($conn) {
     // Consulta para obtener los nombres de las canciones junto con sus imágenes y archivos
     $sql = "SELECT song_name, song_image, song_file, artist_name, song_id 
             FROM song 
@@ -153,34 +155,37 @@ if ($conn) {
     $stmt = $conn->prepare($sql);
     $stmt->execute();
     $canciones = $stmt->fetchAll(PDO::FETCH_ASSOC);
-} else {
+  } else {
     echo "Error en la conexión a la base de datos.";
-}
-?>
+  }
+  ?>
 
-<div class="music-grid">
+  <div class="music-grid">
     <?php if (!empty($canciones)): ?>
-        <?php foreach ($canciones as $cancion): ?>
-            <div class="container">
-                <div class="music-card">
-                    <a href="Backend/download.php?song_file_id=<?php echo urlencode($cancion['song_file']);; ?>&song_name=<?php echo urlencode($cancion['song_name']); ?>&song_artist=<?php echo urlencode($cancion['artist_name']); ?>&song_image=<?php echo urlencode($cancion['song_image']); ?>&song_id=<?php echo urlencode($cancion['song_id']); ?>">
-                        <img src="Music_temp/<?php echo htmlspecialchars($cancion['song_name']);?>Image.jpg" alt="Portada de <?php echo htmlspecialchars($cancion['song_name']); ?>" class="thumbnail" />
-                        <div class="song-info">
-                            <h3 class="song-title"><?php echo htmlspecialchars($cancion['song_name']); ?></h3>
-                            <p class="song-artist"><?php echo htmlspecialchars($cancion['artist_name']); ?></p>
-                        </div>
-                    </a>
-                </div>
-            </div>
-        <?php endforeach; ?>
+      <?php foreach ($canciones as $cancion): ?>
+        <div class="container">
+          <div class="music-card">
+            <a
+              href="Backend/download.php?song_file_id=<?php echo urlencode($cancion['song_file']);
+              ; ?>&song_name=<?php echo urlencode($cancion['song_name']); ?>&song_artist=<?php echo urlencode($cancion['artist_name']); ?>&song_image=<?php echo urlencode($cancion['song_image']); ?>&song_id=<?php echo urlencode($cancion['song_id']); ?>">
+              <img src="Music_temp/<?php echo htmlspecialchars($cancion['song_name']); ?>Image.jpg"
+                alt="Portada de <?php echo htmlspecialchars($cancion['song_name']); ?>" class="thumbnail" />
+              <div class="song-info">
+                <h3 class="song-title"><?php echo htmlspecialchars($cancion['song_name']); ?></h3>
+                <p class="song-artist"><?php echo htmlspecialchars($cancion['artist_name']); ?></p>
+              </div>
+            </a>
+          </div>
+        </div>
+      <?php endforeach; ?>
     <?php else: ?>
-        <p>No hay canciones disponibles.</p>
+      <p>No hay canciones disponibles.</p>
     <?php endif; ?>
-</div>
+  </div>
 
 
-    
-    <!-- Añadir más canciones aquí -->
+
+  <!-- Añadir más canciones aquí -->
   </div>
 </body>
 <script>
