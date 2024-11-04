@@ -6,6 +6,14 @@
   font-family: Arial, sans-serif;
 }
 
+img {
+  height: 10vh;
+  width: 15vh;
+  border-radius: 10px;
+  margin: auto;
+  margin-right: 10px;
+}
+
 /* Background and container */
 body {
   background-image: url("../Image/bg.jpg");
@@ -43,6 +51,10 @@ body {
   color: #2d003b;
   border-radius: 50%;
   font-size: 20px;
+}
+
+.play-icon:hover {
+  cursor: pointer;
 }
 
 h1 {
