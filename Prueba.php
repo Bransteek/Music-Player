@@ -57,9 +57,9 @@ if ($conn) {
   <ul class="song-list">
     <?php
     // Iterar sobre los resultados de la consulta y generar la lista de canciones
-    foreach ($canciones as $cancion) {
+    foreach ($canciones as $favs) {
         // Redirigir a presentacion_cancion.php pasando el nombre de la canción
-        echo '<li onclick="window.location.href=\'Backend/download.php?song_file_id=' . urlencode($cancion['song_file']) . '&song_image=' . urlencode($cancion['song_image']). '&song_name=' . urlencode($cancion['song_name'])  . '&song_artist=' . urlencode($cancion['artist_name'])   . '&song_id=' . urlencode($cancion['song_id'])  . '\'">' . htmlspecialchars($cancion['song_name']) . '</li>';
+        echo '<li onclick="window.location.href=\'Backend/download.php?song_file_id=' . urlencode($favs['song_file']) . '&song_image=' . urlencode($favs['song_image']). '&song_name=' . urlencode($favs['song_name'])  . '&song_artist=' . urlencode($favs['artist_name'])   . '&song_id=' . urlencode($favs['song_id'])  . '\'">' . htmlspecialchars($favs['song_name']) . '</li>';
 
     }
     ?>
