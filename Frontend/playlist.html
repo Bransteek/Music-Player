@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lista de Canciones</title>
+    <link rel="stylesheet" href="list-style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <!-- hacer la funcionalidad de reproducir -->
+        <div class="play-icon" onclick="play()">&#9658;</div>
+
+        <h1>Nombre de la lista de reproduccion</h1>
+        <p>Número de canciones</p>
+      </div>
+      <div class="song-list">
+        <div class="song-item">
+          <span class="song-number">1</span>
+          <img src="../Music_temp/Imagen playlist.jpg" />
+          <div class="song-details">
+            <div class="song-title">Nombre de la canción</div>
+            <div class="song-artist">Artista</div>
+          </div>
+          <span class="song-duration">Duración</span>
+        </div>
+      </div>
+    </div>
+  </body>
+
+  <script>
+    function play() {
+      window.location.href = "https://www.google.com";
+    }
+  </script>
+</html>

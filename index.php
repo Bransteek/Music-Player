@@ -100,10 +100,7 @@ if (!isset($_SESSION['usuario'])) {
                   alt="Portada de <?php echo htmlspecialchars($playlist['song_name']); ?>" class="thumbnail" />
                 <span class="card__footer">
                   <span><?php echo htmlspecialchars($playlist['playlist_name']); ?></span>
-
                 </span>
-
-
               </a>
             </div>
 
@@ -113,18 +110,6 @@ if (!isset($_SESSION['usuario'])) {
         <?php endif; ?>
       </div>
 
-
-
-
-
-
-
-
-
-
-
-
-
       <button class="next" onclick="moveSlide(1)">&#10095;</button>
       <!-- Puedes agregar más elementos según lo necesites -->
     </div>
@@ -132,7 +117,6 @@ if (!isset($_SESSION['usuario'])) {
   </div>
 
   <script src="Backend/caruosel.js"></script>
-
 
   <?php
   include_once("Backend/BD.php");
@@ -175,8 +159,6 @@ if (!isset($_SESSION['usuario'])) {
       <p>No hay canciones disponibles.</p>
     <?php endif; ?>
   </div>
-
-
 
   <!-- Añadir más canciones aquí -->
   </div>
@@ -222,7 +204,5 @@ if (!isset($_SESSION['usuario'])) {
     });
   });
 </script>
-
-
 
 </html>
