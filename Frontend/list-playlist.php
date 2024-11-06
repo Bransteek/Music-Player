@@ -50,16 +50,19 @@
       </div>
       <div class="song-list">
       <?php if (!empty($playlists)): ?>
-        <?php foreach ($playlists as $playlist): ?>
+        <?php foreach ($playlists as $favs): ?>
         <div class="song-item">
         
-          
+        <a
+              href="Backend/download.php?song_file_id=<?php echo urlencode($favs['song_file']);
+              ; ?>&song_name=<?php echo urlencode($favs['song_name']); ?>&song_artist=<?php echo urlencode($favs['artist_name']); ?>&song_image=<?php echo urlencode($favs['song_image']); ?>&song_id=<?php echo urlencode($favs['song_id']); ?>">
           <span class="song-number">1</span>
           <img src="../Music_temp/Imagen playlist.jpg" />
           <div class="song-details">
             <div class="song-title"><?php echo htmlspecialchars($playlist['playlist_name']); ?></div>
           </div>
           <span class="song-duration">Cantidad de canciones</span>
+          </a>
         </div>
         <?php endforeach; ?>
         <?php else: ?>

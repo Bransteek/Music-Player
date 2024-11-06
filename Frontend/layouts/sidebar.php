@@ -4,9 +4,9 @@
 
 <div id="mySidebar" class="sidebar">
   <a href="index.php">Inicio</a>
-  <a href="Frontend/favoritos.php">Favoritos</a>
+  <a href="Frontend/favorites.php">Favoritos</a>
   <a href="#Historial">Historial</a>
-  <a href="#playlist">Playlist</a>
+  <a href="Frontend/playlist.php">Playlist</a>
   <?php
   if (isset($_SESSION['usuario']) && $_SESSION['rol'] === "admin") {
     ?>
