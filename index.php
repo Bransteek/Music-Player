@@ -85,7 +85,6 @@ if (!isset($_SESSION['usuario'])) {
   <!-- carousel de playlists-->
 
 
-
   <div class="carousel-container">
     <h2>Playlists</h2>
 
@@ -140,17 +139,17 @@ if (!isset($_SESSION['usuario'])) {
 
   <div class="music-grid">
     <?php if (!empty($canciones)): ?>
-      <?php foreach ($canciones as $cancion): ?>
+      <?php foreach ($canciones as $favs): ?>
         <div class="container">
           <div class="music-card">
             <a
-              href="Backend/download.php?song_file_id=<?php echo urlencode($cancion['song_file']);
-              ; ?>&song_name=<?php echo urlencode($cancion['song_name']); ?>&song_artist=<?php echo urlencode($cancion['artist_name']); ?>&song_image=<?php echo urlencode($cancion['song_image']); ?>&song_id=<?php echo urlencode($cancion['song_id']); ?>">
-              <img src="Music_temp/<?php echo htmlspecialchars($cancion['song_name']); ?>Image.jpg"
-                alt="Portada de <?php echo htmlspecialchars($cancion['song_name']); ?>" class="thumbnail" />
+              href="Backend/download.php?song_file_id=<?php echo urlencode($favs['song_file']);
+              ; ?>&song_name=<?php echo urlencode($favs['song_name']); ?>&song_artist=<?php echo urlencode($favs['artist_name']); ?>&song_image=<?php echo urlencode($favs['song_image']); ?>&song_id=<?php echo urlencode($favs['song_id']); ?>">
+              <img src="Music_temp/<?php echo htmlspecialchars($favs['song_name']); ?>Image.jpg"
+                alt="Portada de <?php echo htmlspecialchars($favs['song_name']); ?>" class="thumbnail" />
               <div class="song-info">
-                <h3 class="song-title"><?php echo htmlspecialchars($cancion['song_name']); ?></h3>
-                <p class="song-artist"><?php echo htmlspecialchars($cancion['artist_name']); ?></p>
+                <h3 class="song-title"><?php echo htmlspecialchars($favs['song_name']); ?></h3>
+                <p class="song-artist"><?php echo htmlspecialchars($favs['artist_name']); ?></p>
               </div>
             </a>
           </div>

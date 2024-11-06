@@ -4,7 +4,7 @@
 
 <div id="mySidebar" class="sidebar">
   <a href="index.php">Inicio</a>
-  <a href="#Favoritos">Favoritos</a>
+  <a href="Frontend/favoritos.php">Favoritos</a>
   <a href="#Historial">Historial</a>
   <a href="#playlist">Playlist</a>
   <?php
