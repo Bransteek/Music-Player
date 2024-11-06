@@ -95,7 +95,8 @@ if (!isset($_SESSION['usuario'])) {
           <button class="prev" onclick="moveSlide(-1)">&#10094;</button>
           <?php foreach ($playlists as $playlist): ?>
             <div class="slide">
-              <a href="Prueba.php" class="card">
+            <a href="Frontend/playlist.php?playlist_name=<?php echo urlencode($playlist['playlist_name']); ?>" class="card">              
+              
                 <img src="Music_temp/Imagen playlist.jpg"
                   alt="Portada de <?php echo htmlspecialchars($playlist['song_name']); ?>" class="thumbnail" />
                 <span class="card__footer">
