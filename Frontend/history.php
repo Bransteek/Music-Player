@@ -26,10 +26,12 @@
 
     if ($conn) {
       // Consulta para obtener los nombres de las playlists
-      $sql = "SELECT favorite_song_id,song_name, song_image, song_file, artist_name, song_id,duration FROM favorites 
-    JOIN song ON song_id = favorite_song_id 
-    JOIN artist ON artist_id = song_artist_id 
-    WHERE favorite_user_name = :user_name;"; // Ajusta según tu esquema de base de datos
+      $sql = "SELECT song_name, song_image, song_file, artist_name, song_id,duration FROM history
+JOIN user_ ON user_name = history_user_name
+JOIN song ON song_id = history_song_id
+JOIN artist ON artist_id = song_artist_id
+WHERE history_user_name = :user_name
+ORDER BY history_date DESC;"; // Ajusta según tu esquema de base de datos
   
       // Preparar la consulta
       $stmt = $conn->prepare($sql);
@@ -49,17 +51,16 @@
   ?>
   <div class="container">
     <div class="header">
-      <!-- hacer la funcionalidad de reproducir -->
-      <div class="play-icon" onclick="play()">&#9658;</div>
+     
 
-      <h1>Favoritos</h1>
+      <h1>Historial</h1>
       <p>Número de canciones</p>
     </div>
     <div class="song-list">
     <?php $counter = 1; ?>
       <?php if (!empty($canciones)): ?>
         <?php foreach ($canciones as $cancion): ?>
-          <a href="../Backend/download.php?song_file_id=<?php echo urlencode($cancion['song_file']);
+            <a href="../Backend/download.php?song_file_id=<?php echo urlencode($cancion['song_file']);
               ; ?>&song_name=<?php echo urlencode($cancion['song_name']); ?>&song_artist=<?php echo urlencode($cancion['artist_name']); ?>&song_image=<?php echo urlencode($cancion['song_image']); ?>&song_id=<?php echo urlencode($cancion['song_id']); ?>">
             <div class="song-item">
               <span class="song-number"><?php echo $counter?></span>

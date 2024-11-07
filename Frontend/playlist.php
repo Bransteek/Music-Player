@@ -27,7 +27,7 @@
     if ($conn) {
       $playlist_name = isset($_GET['playlist_name']) ? $_GET['playlist_name'] : '';
       // Consulta para obtener los nombres de las playlists
-      $sql = "SELECT song_name, song_image, song_file, artist_name, song_id,playlist_name FROM song_playlist
+      $sql = "SELECT song_name, song_image, song_file, artist_name, song_id,playlist_name,duration FROM song_playlist
     JOIN song ON song_id = sp_song_id 
     JOIN artist ON artist_id = song_artist_id
 	JOIN playlist ON playlist_id = sp_playlist_id WHERE playlist_user_name = :user_name AND playlist_name= :playlist_name;"; // Ajusta según tu esquema de base de datos
@@ -54,23 +54,27 @@
       <!-- hacer la funcionalidad de reproducir -->
       <div class="play-icon" onclick="play()">&#9658;</div>
 
-      <h1>Nombre de la lista de reproduccion</h1>
-      <p>Número de canciones</p>
+      <h1><?php echo $playlist_name?></h1>
+      
     </div>
     <div class="song-list">
+      <?php $counter = 1; ?>
       <?php if (!empty($canciones)): ?>
         <?php foreach ($canciones as $cancion): ?>
-          <div class="song-item">
-            <a href="../Backend/download.php?song_file_id=<?php echo urlencode($cancion['song_file']);
+          <a href="../Backend/download.php?song_file_id=<?php echo urlencode($cancion['song_file']);
               ; ?>&song_name=<?php echo urlencode($cancion['song_name']); ?>&song_artist=<?php echo urlencode($cancion['artist_name']); ?>&song_image=<?php echo urlencode($cancion['song_image']); ?>&song_id=<?php echo urlencode($cancion['song_id']); ?>">
-              <span class="song-number">1</span>
-              <img src="../Music_temp/Imagen playlist.jpg" />
+          <div class="song-item">
+            
+              <span class="song-number"><?php echo $counter?></span>
+              <img src="../Music_temp/<?php echo htmlspecialchars($cancion['song_name']); ?>Image.jpg" />
               <div class="song-details">
                 <div class="song-title"><?php echo htmlspecialchars($cancion['song_name']); ?></div>
-                <div class="song-artist">Artista</div>
+                <div class="song-artist"><?php echo htmlspecialchars($cancion['artist_name']); ?></div>
               </div>
-              <span class="song-duration">Duración</span>
+              <span class="song-duration"><?php  echo $cancion['duration'] . " s" ?></span>
           </div>
+          </a>
+          <?php $counter++; ?>
         <?php endforeach; ?>
       <?php else: ?>
         <p>No hay canciones disponibles.</p>

@@ -44,6 +44,30 @@ try {
     echo "Error en la consulta: " . $e->getMessage();
 }
 
+include_once('Backend/BD.php');
+$conn = conexion::conexion_bd();
+
+// Suponiendo que ya tienes la variable $user_name disponible
+
+try {
+    // Prepara la consulta
+    $query = "INSERT INTO history (history_user_name,history_song_id)
+    VALUES (:user_name,:song_id)";
+    
+    $stmt = $conn->prepare($query); // $conn debe ser la conexión PDO
+
+    // Asigna el valor a la variable
+    $stmt->bindParam(':song_id', $song_id);
+    $stmt->bindParam(':user_name', $user_name);
+    $stmt->execute();
+
+    // Obtiene los resultados
+    $history = $stmt->fetchAll(PDO::FETCH_ASSOC);
+} catch (PDOException $e) {
+    // Manejo de errores
+    echo "Error en la consulta: " . $e->getMessage();
+}
+
 
 ?>
 
@@ -436,8 +460,36 @@ try {
 
     // Acción al presionar favoritos
     document.getElementById('favBtn').addEventListener('click', () => {
-        alert('Añadido a favoritos');
+    // Obtener el ID de la canción
+    const songId = <?php echo json_encode($song_id); ?>;
+
+    // Enviar solicitud a toggle_favorite.php
+    fetch('Backend/toggle_favorite.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: `song_id=${songId}`
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.status === 'added') {
+            alert('Agregado a favoritos');
+        } else if (data.status === 'removed') {
+            alert('Eliminado de favoritos');
+        } else if (data.error === 'not_logged_in') {
+            alert('Debe iniciar sesión para agregar a favoritos');
+            window.location.href = "Frontend/Login.html"; // Redirigir a login
+        } else if (data.error === 'db_connection_failed') {
+            alert('Error de conexión a la base de datos');
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Ocurrió un error al intentar cambiar el estado de favoritos');
     });
+});
+
     
     // Obtener elementos
 const playlistBtn = document.getElementById('playlistBtn');
