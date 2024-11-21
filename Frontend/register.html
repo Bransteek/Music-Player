@@ -25,7 +25,7 @@
   </head>
 
   <body>
-    <form action="../Backend/registeruser.php" method="post">
+    <form action="../Backend/registeruser.php" method="post" >
       <section class="form-login">
         <h5>Registro</h5>
         <input
@@ -50,7 +50,7 @@
           id="confirmpasswordvalue"
           class="controls"
           type="password"
-          name="password"
+          name="password_confirm"
           placeholder="Contraseña"
           required
         />
@@ -80,6 +80,7 @@
             var input = document.getElementById("passwordvalue");
             input.value = encrypt(input.value);
             document.getElementById("passwordvalue").innerText = input.value;
+            alert('entro' + input.value)
           }
         </script>
 

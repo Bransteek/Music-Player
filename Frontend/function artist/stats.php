@@ -43,7 +43,6 @@
       <button type="submit" class="buttons">ver</button>
     </section>
 
-    <?php //echo htmlspecialchars($Año) ?>
 
 
   </form>
@@ -57,7 +56,59 @@
 <script>
   // script.js
   const ctx = document.getElementById("viewsChart").getContext("2d");
+  // Tamaño del array
 
+
+
+  <?php  
+  include_once("../../Backend/BD.php");
+
+  $conn = conexion::conexion_bd();
+
+  $añoN = (int)$Año; 
+  $valoresPHP = [0,0,0,0,0,0,0,0,0,0,0,0];
+
+  
+  if ($conn) {
+
+    $query = "SELECT 
+DATE_TRUNC('month', history_date) AS mes,
+COUNT(*) AS total_reproducciones FROM history
+JOIN song ON history.history_song_id=song.song_id
+JOIN artist ON artist.artist_id=song_artist_id
+WHERE artist.artist_name='Kiraw' AND EXTRACT(YEAR FROM history_date) = $añoN
+GROUP BY DATE_TRUNC('month', history_date)
+ORDER BY mes;";
+$stmt = $conn->prepare($query);
+$stmt->execute();
+$history = $stmt->fetchAll(PDO::FETCH_ASSOC);
+foreach ($history as $historys): 
+
+  
+ 
+    $mes = (int)date("m", strtotime(htmlspecialchars(string: $historys['mes'])));
+
+    $valoresPHP[$mes - 1] = htmlspecialchars(string: $historys['total_reproducciones']);
+  endforeach;
+  } else {
+    echo "Error en la conexión a la base de datos.";
+}
+
+
+
+
+
+
+
+
+
+
+
+    
+
+
+  ?>
+  const valoresPHP = <?php echo json_encode($valoresPHP); ?>;
   // Datos de visualizaciones por mes
   const data = {
     labels: [
@@ -81,7 +132,7 @@
           $valoresPHP = [128, 129, 124, 126]; // Array en PHP
           ?>*/
       //[<?php echo implode(",", $valoresPHP); ?>]
-      data: [150, 200, 180, 220, 300, 250, 270, 310, 290, 320, 330, 350], // Cambia estos valores según los datos reales
+      data: valoresPHP, // Cambia estos valores según los datos reales
       backgroundColor: "rgba(203, 49, 245, 0.5)",
       borderColor: "rgba(203, 49, 245, 1)",
       borderWidth: 1,
