@@ -6,6 +6,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Lista de playlist</title>
   <link rel="stylesheet" href="list-style.css" />
+
+  
 </head>
 
 <body>
@@ -17,6 +19,7 @@
     exit();
   } else {
     include_once("../Backend/BD.php");
+    include_once("layouts/sidebar.php");
 
     // Conectar a la base de datos usando la clase conexion
     $conn = conexion::conexion_bd();
@@ -53,14 +56,15 @@
     <div class="song-list">
       <?php if (!empty($playlists)): ?>
         <?php foreach ($playlists as $playlist): ?>
-          <a href="playlist.php?playlist_name=<?php echo urlencode($playlist['playlist_name']); ?>" class="card">
+          <a href="playlist.php?playlist_id=<?php echo urlencode($playlist['playlist_id']); ?>" class="card">
             <div class="song-item"> 
               <span class="song-number">1</span>
               <img src="../Music_temp/Imagen playlist.jpg" />
               <div class="song-details">
                 <div class="song-title"><?php echo htmlspecialchars($playlist['playlist_name']); ?></div>
               </div>
-              
+              <button class="delete-btn"
+                onclick="deleteFavorite(event, '<?php echo htmlspecialchars($playlist['playlist_id']); ?>'),echo htmlspecialchars($playlist['playlist_name'])">✘</button>
             </div>
           </a>
         <?php endforeach; ?>
@@ -70,5 +74,16 @@
     </div>
   </div>
 </body>
+
+<script>
+  function deleteFavorite(event, playlistId,playlistName) {
+    event.preventDefault(); // Evita el comportamiento predeterminado del <a>
+    event.stopPropagation();
+    const url = `../../Music-Player/Backend/Delete_playlist.php?id_playlist=${playlistId}&playlist_name=${playlistName}`;
+    window.location.href = url; // Redirige a la URL para procesar la eliminación
+  }
+
+
+</script>
 
 </html>

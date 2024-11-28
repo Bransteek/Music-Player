@@ -1,17 +1,18 @@
-<link rel="stylesheet" href="../Music-Player/Frontend/Sidebar.css" />
+<link rel="stylesheet" href="../../../../../Music-Player/Frontend/Sidebar.css" />
 
 <button class="open-btn" onclick="toggleSidebar()">☰ Abrir</button>
 
 <div id="mySidebar" class="sidebar">
-  <a href="index.php">Inicio</a>
-  <a href="Frontend/favorites.php">Favoritos</a>
-  <a href="Frontend/history.php">Historial</a>
-  <a href="Frontend/list-playlist.php">Playlist</a>
+  <a href="../../../Music-Player/index.php">Inicio</a>
+  <a href="../../../Music-Player/Frontend/favorites.php">Favoritos</a>
+  <a href="../../../Music-Player/Frontend/history.php">Historial</a>
+  <a href="../../../Music-Player/Frontend/list-playlist.php">Playlist</a>
+  
   <?php
   if (isset($_SESSION['usuario']) && $_SESSION['rol'] === "admin") {
     ?>
     <div class="funtion_admin">
-      <a href="../Music-Player/Frontend/administrator_management/admin.html">
+      <a href="../../../../Music-Player/Frontend/administrator_management/admin.html">
         Funciones de administrador
       </a>
     </div>
@@ -20,13 +21,14 @@
   if (isset($_SESSION['usuario']) && $_SESSION['rol'] === "artist") {
     ?>
     <div class="funtion_artist">
-      <a href="../Music-Player/Frontend/function artist/artist.html">
+      <a href="../../../../Music-Player/Frontend/function artist/artist.html">
         Funciones de artista
       </a>
     </div>
     <?php
   }
   ?>
+  <a href="../../../Music-Player/Backend/logout.php">Cerrar sesion</a>
   <a href="javascript:void(0)" onclick="toggleSidebar()">Cerrar ×</a>
 
 </div>

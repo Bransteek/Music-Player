@@ -38,7 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         // Ejecutar la consulta
         if ($stmt->execute()) {
             // Redirigir a la página de éxito si se crea la playlist
-            header("Location: ../Portada_music.php");
+            header('Location: ' . $_SERVER['HTTP_REFERER']);
             exit();
         } else {
             // Mostrar un mensaje de error si la inserción falla

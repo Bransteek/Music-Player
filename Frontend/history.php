@@ -17,6 +17,7 @@
     exit();
   } else {
     include_once("../Backend/BD.php");
+    include_once("layouts/sidebar.php");
 
     // Conectar a la base de datos usando la clase conexion
     $conn = conexion::conexion_bd();
@@ -54,7 +55,6 @@ ORDER BY history_date DESC;"; // Ajusta según tu esquema de base de datos
      
 
       <h1>Historial</h1>
-      <p>Número de canciones</p>
     </div>
     <div class="song-list">
     <?php $counter = 1; ?>
