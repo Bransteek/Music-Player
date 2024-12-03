@@ -26,7 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Si la conexión a la base de datos fue exitosa
     if ($conn) {
         // Preparar la consulta SQL
-        $sql = "INSERT INTO playlist (playlist_name, descripcion, playlist_user_name) VALUES (:playlist_name, '', :user_name)";
+        $sql = "INSERT INTO playlist (playlist_name, descripcion, playlist_user_name, tipe_playlist_album) VALUES (:playlist_name, '', :user_name,1)";
         
         // Preparar la sentencia
         $stmt = $conn->prepare($sql);

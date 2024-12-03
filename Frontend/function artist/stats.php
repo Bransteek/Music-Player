@@ -67,8 +67,9 @@
 
   $añoN = (int)$Año; 
   $valoresPHP = [0,0,0,0,0,0,0,0,0,0,0,0];
-
-  
+  session_start();
+  $username = $_SESSION['usuario'];
+    $user_name = htmlspecialchars($username);
   if ($conn) {
 
     $query = "SELECT 
@@ -76,10 +77,12 @@ DATE_TRUNC('month', history_date) AS mes,
 COUNT(*) AS total_reproducciones FROM history
 JOIN song ON history.history_song_id=song.song_id
 JOIN artist ON artist.artist_id=song_artist_id
-WHERE artist.artist_name='Kiraw' AND EXTRACT(YEAR FROM history_date) = $añoN
+WHERE artist.artist_name= :User_Name AND EXTRACT(YEAR FROM history_date) = $añoN
 GROUP BY DATE_TRUNC('month', history_date)
 ORDER BY mes;";
 $stmt = $conn->prepare($query);
+$stmt->bindParam(':User_Name', $user_name);
+
 $stmt->execute();
 $history = $stmt->fetchAll(PDO::FETCH_ASSOC);
 foreach ($history as $historys): 

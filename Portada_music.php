@@ -4,6 +4,7 @@ if (isset($_GET['song_name']) && isset($_GET['song_artist']) && isset($_GET['son
     $songName = htmlspecialchars($_GET['song_name']);
     $song_artist = htmlspecialchars($_GET['song_artist']);
     $song_id = htmlspecialchars($_GET['song_id']);
+    $playlist_id = htmlspecialchars($_GET['playlist_id']);
     $songPath = 'Music_temp/' . $songName . '.mp3'; // Ruta a la canción
     $imagePath = 'Music_temp/' . $songName . 'Image.jpg'; // Ruta de la imagen
 } else {
@@ -29,7 +30,7 @@ $conn = conexion::conexion_bd();
 try {
     // Prepara la consulta
     $query = "SELECT playlist_name, playlist_id FROM playlist 
-              WHERE playlist.playlist_user_name = :user_name";
+              WHERE playlist.playlist_user_name = :user_name AND tipe_playlist_album = 1";
 
     $stmt = $conn->prepare($query); // $conn debe ser la conexión PDO
 
@@ -274,7 +275,7 @@ try {
             color: #333;
         }
 
-        li{
+        li {
             cursor: pointer;
         }
     </style>
@@ -467,7 +468,10 @@ try {
 
         // Acción para siguiente canción
         nextBtn.addEventListener('click', () => {
-            alert('Siguiente canción (Funcionalidad a implementar)');
+
+            
+
+
         });
 
         // Acción para canción anterior
@@ -563,7 +567,7 @@ try {
 
 <script>
     // Función de retroceso (volverse a la página anterior)
-    document.getElementById('backToPreviousPageBtn').addEventListener('click', function() {
+    document.getElementById('backToPreviousPageBtn').addEventListener('click', function () {
         window.location.href = '../../Music-Player/index.php';
     });
 </script>

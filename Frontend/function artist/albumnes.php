@@ -4,8 +4,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Lista de playlist</title>
-  <link rel="stylesheet" href="list-style.css" />
+  <title>Lista de Albumes</title>
+  <link rel="stylesheet" href="../list-style.css" />
 
   
 </head>
@@ -18,8 +18,8 @@
     header("Location: Login.html");
     exit();
   } else {
-    include_once("../Backend/BD.php");
-    include_once("layouts/sidebar.php");
+    include_once("../../Backend/BD.php");
+    include_once("../layouts/sidebar.php");
 
     // Conectar a la base de datos usando la clase conexion
     $conn = conexion::conexion_bd();
@@ -30,7 +30,7 @@
     if ($conn) {
       // Consulta para obtener los nombres de las playlists
       $sql = "SELECT playlist_name, playlist_id FROM playlist 
-                WHERE playlist_user_name = :user_name AND tipe_playlist_album = 1"; // Ajusta según tu esquema de base de datos
+                WHERE playlist_user_name = :user_name AND tipe_playlist_album = 2"; // Ajusta según tu esquema de base de datos
   
       // Preparar la consulta
       $stmt = $conn->prepare($sql);
@@ -50,27 +50,27 @@
   ?>
   <div class="container">
     <div class="header">
-      <h1>Playlist</h1>
+      <h1>Albumes</h1>
       
     </div>
     <div class="song-list">
       <?php if (!empty($playlists)): ?>
         <?php foreach ($playlists as $playlist): ?>
-          <a href="playlist.php?playlist_name=<?php echo urlencode($playlist['playlist_name']); ?>" class="card">
+          <a href="../playlist.php?playlist_name=<?php echo urlencode($playlist['playlist_name']); ?>" class="card">
             <div class="song-item"> 
               <span class="song-number">1</span>
-              <img src="../Music_temp/Imagen playlist.jpg" />
+              <img src="../../Music_temp/Imagen playlist.jpg" />
               <div class="song-details">
                 <div class="song-title"><?php echo htmlspecialchars($playlist['playlist_name']); ?></div>
               </div>
-              
+
               <button class="delete-btn"
-                onclick="deleteFavorite(event, '<?php echo htmlspecialchars($playlist['playlist_id']); ?>'),<?php echo htmlspecialchars($playlist['playlist_name']);?>">✘</button>
+                onclick="deleteFavorite(event, '<?php echo htmlspecialchars($playlist['playlist_id']); ?>','<?php echo htmlspecialchars($playlist['playlist_name']);?>')">✘</button>
             </div>
             </a>
         <?php endforeach; ?>
       <?php else: ?>
-        <p>No hay playlist disponibles.</p>
+        <p>No hay albumes.</p>
       <?php endif; ?>
     </div>
   </div>
@@ -80,7 +80,7 @@
   function deleteFavorite(event, playlistId,playlistName) {
     event.preventDefault(); // Evita el comportamiento predeterminado del <a>
     event.stopPropagation();
-    const url = `../../Music-Player/Backend/Delete_playlist.php?id_playlist=${playlistId}&playlist_name=${playlistName}`;
+    const url = `../../../Music-Player/Backend/Delete_playlist.php?id_playlist=${playlistId}&playlist_name=${playlistName}`;
     window.location.href = url; // Redirige a la URL para procesar la eliminación
   }
 

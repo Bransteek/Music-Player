@@ -17,8 +17,11 @@ if (!isset($_SESSION['usuario'])) {
 
   if ($conn) {
     // Consulta para obtener los nombres de las playlists
-    $sql = "SELECT playlist_name, playlist_id FROM playlist 
-                WHERE playlist_user_name = :user_name"; // Ajusta según tu esquema de base de datos
+    $sql = "SELECT DISTINCT ON (playlist_id) playlist_name, playlist_id,song_name FROM song_playlist 
+JOIN song ON  sp_song_id = song_id
+JOIN playlist ON playlist_id = sp_playlist_id
+                WHERE playlist_user_name = :user_name AND tipe_playlist_album = 1 
+                ORDER BY playlist_id, song_name;"; // Ajusta según tu esquema de base de datos
 
     // Preparar la consulta
     $stmt = $conn->prepare($sql);
@@ -97,7 +100,7 @@ if (!isset($_SESSION['usuario'])) {
             <div class="slide">
             <a href="Frontend/playlist.php?playlist_name=<?php echo urlencode($playlist['playlist_name']); ?>" class="card">              
               
-                <img src="Music_temp/Imagen playlist.jpg"
+                <img src="Music_temp/<?php echo htmlspecialchars($playlist['song_name']); ?>Image.jpg"
                   alt="Portada de <?php echo htmlspecialchars($playlist['song_name']); ?>" class="thumbnail" />
                 <span class="card__footer">
                   <span><?php echo htmlspecialchars($playlist['playlist_name']); ?></span>

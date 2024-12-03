@@ -25,6 +25,11 @@
         Funciones de artista
       </a>
     </div>
+    <div class="funtion_artist">
+      <a href="../../../../Music-Player/Frontend/function artist/albumnes.php">
+        Albumes
+      </a>
+    </div>
     <?php
   }
   ?>
